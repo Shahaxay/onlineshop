@@ -1,4 +1,5 @@
-const Procuct = require('../models/product');
+const fs=require('fs');
+
 const model=require('../models/product');
 
 exports.getAddProduct=(req, res, next) => {
@@ -19,13 +20,14 @@ exports.getAddProduct=(req, res, next) => {
   };
 
   exports.getProducts=(req, res, next) => {
-    const products=Procuct.fetchAll();
-    res.render('shop', {
-      prods: products,
-      pageTitle: 'Shop',
-      path: '/',
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true
-    });
+      model.fetchAll((products)=>{
+        res.render('shop', {
+          prods: products,
+          pageTitle: 'Shop',
+          path: '/',
+          hasProducts: products.length > 0,
+          activeShop: true,
+          productCSS: true
+        });
+      });
   };
